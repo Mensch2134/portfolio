@@ -1,6 +1,7 @@
 import { sanityFetch } from "@/sanity/lib/live";
 import { urlFor } from "@/sanity/lib/image";
-import { defineQuery, PortableText } from "next-sanity";
+import { defineQuery} from "next-sanity";
+import { PortableText } from '@portabletext/react';
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -15,57 +16,33 @@ const PROJECT_QUERY = defineQuery(`*[
     date
 }`);
 
-const customSerializers = {
-    types: {
-      // Customize how "block" content types (like paragraphs) are rendered
-      block: (props) => {
-        const { children, value } = props;
-  
-        // Handle paragraphs and other block types here
-        if (value._type === 'block' && value.style === 'h1') {
-          return <h1 className="text-3xl font-bold">{children}</h1>;
-        }
-        if (value._type === 'block' && value.style === 'h2') {
-          return <h2 className="text-2xl font-semibold">{children}</h2>;
-        }
-        return <p className="text-lg">{children}</p>;  // Default to paragraphs
-      },
-      // Customize how lists are rendered
-      list: (props) => {
-        return (
-          <ul className="list-disc pl-5">
-            {props.children}
-          </ul>
-        );
-      },
-      // Customize ordered lists
-      listItem: (props) => {
-        return (
-          <li className="text-lg">{props.children}</li>
-        );
-      },
-      // Customize how each item in the ordered list is rendered (if needed)
-      numberList: (props) => {
-        return (
-          <ol className="list-decimal pl-5">
-            {props.children}
-          </ol>
-        );
-      },
+const customComponents = {
+    block: {
+      normal: ({ children }) => <p className="text-md">{children}</p>,
+      // Add more custom block types here if needed
     },
-    marks: {
-      // Handle marks like links or other text styles if needed
-      link: (props) => {
-        return (
-          <a
-            href={props.href}
-            target="_blank"
-            className="text-blue-500 underline"
-          >
-            {props.children}
-          </a>
-        );
-      },
+    list: {
+      // Customize how unordered lists are rendered
+      bullet: ({ children }) => (
+        <ul className="list-disc pl-7 mt-3">
+          {children}
+        </ul>
+      ),
+      // Customize how ordered lists are rendered
+      number: ({ children }) => (
+        <ol className="list-decimal pl-7 mt-3">
+          {children}
+        </ol>
+      ),
+    },
+    listItem: {
+      // Customize how each list item is rendered
+      bullet: ({ children }) => (
+        <li className="text-md">{children}</li>
+      ),
+      number: ({ children }) => (
+        <li className="text-md">{children}</li>
+      ),
     },
   };
 
@@ -80,10 +57,10 @@ export default async function ProjectPage({ params }) {
   if (!project) return notFound();
 
   return (
-    <main className="container mx-auto p-12">
-      <h1 className="text-4xl font-bold">{project.name}</h1>
+    <main className="container mx-auto p-12 bg-[#1d1b1d] rounded-sm">
+      <h1 className="text-4xl text-[#cd6688] font-semibold">{project.name}</h1>
       {project.date && (
-        <p className="text-gray-600">{new Date(project.date).toLocaleDateString()}</p>
+        <p className="text-gray-600">{new Date(project.date).getFullYear()}</p>
       )}
       {project.image?.length > 0 && (
         <Image
@@ -91,11 +68,10 @@ export default async function ProjectPage({ params }) {
           alt={project.name}
           width={800}
           height={400}
-          className="my-4 rounded-lg"
+          className="mx-auto my-10 rounded-lg"
         />
       )}
-      {project.short_description && <p className="text-lg">{project.short_description}</p>}
-      {project.details && <PortableText value={project.details} serializers={customSerializers} />}
+      {project.details && <PortableText value={project.details} components={customComponents} />}
     </main>
   );
 }
