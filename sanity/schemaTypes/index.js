@@ -1,5 +1,5 @@
-import { eventType } from './eventType'
+import { projectType } from './projectType'
 
 export const schema = {
-  types: [eventType],
+  types: [projectType],
 }

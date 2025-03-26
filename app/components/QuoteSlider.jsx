@@ -24,8 +24,8 @@ export default function QuoteSlider() {
     })
 
     return (
-        <div className={`bg-[#222022] rounded-sm my-5 p-8 px-25 [text-shadow:_1_2px_0px_rgba(205,102,136,1)]`}>
-            <div className="flex flex-col justify-center border-l-3 pl-7 min-h-35">
+        <div className={`bg-[#1a1a1a] rounded-sm my-15 p-8 px-25 [text-shadow:_1_2px_0px_rgba(205,102,136,1)]`}>
+            <div className="flex flex-col justify-center border-l-3 pl-7 min-h-45">
                 <div>
                     <p className="text-2xl font-bold">
                         {quotes[quoteIndex].quote}

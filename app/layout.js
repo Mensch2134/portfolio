@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono, Inconsolata } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import { SanityLive } from "@/sanity/lib/live";
 
 const inconsolata = Inconsolata({ 
   subsets: ["latin"], 
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
         <Navbar />
         <div className="max-w-5xl mx-auto px-4">
           {children}
+          <SanityLive />
         </div>
       </body>
     </html>

@@ -2,7 +2,7 @@
 
 export default function About() {
     return (
-        <div className="flex flex-row items-center my-5 w-full rounded-sm">
+        <div className="flex flex-row items-center mx-5 my-5 w-full">
             <div className="w-2/3 my-4">
                 <h1 className="text-5xl text-right font-bold text-[#cd6688]">
                     This is me ➡
