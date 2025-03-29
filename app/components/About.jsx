@@ -15,7 +15,7 @@ export default function About() {
                     <p className="mt-5">
                         What i like:
                     </p>
-                    <ul className="list-disc pl-10">
+                    <ul className="list-[square] pl-10">
                         <li>RPGs, analog and digital</li>
                         <li>Programming</li>
                         <li>Computer Graphics</li>
